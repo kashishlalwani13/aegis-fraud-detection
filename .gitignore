@@ -216,3 +216,20 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Databricks artifacts
+*.delta
+_delta_log/
+fraud_model/
+checkpoint/
+streaming_output/
+decision_output/
+drift_summary/
+threshold_sweep/
+
+# OS clutter
+.DS_Store
+Thumbs.db
+
+# Local exports
+*.zip
