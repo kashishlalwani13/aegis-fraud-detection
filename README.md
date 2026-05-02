@@ -146,5 +146,5 @@ Aegis is designed as a **systems-level fraud detection pipeline**, not just a cl
 ## How to Run
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/aegis-fraud-detection.git
+git clone https://github.com/kashishlalwani13/aegis-fraud-detection.git
 cd aegis-fraud-detection
