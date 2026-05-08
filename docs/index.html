@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aegis — Cost-Aware Real-Time Fraud Intelligence System</title>
+    <title>Aegis: Cost-Aware Real-Time Fraud Intelligence System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <style>
@@ -558,7 +558,7 @@
         <div class="hero-eyebrow">Machine Learning · Distributed Systems · FinTech</div>
         <h1>Aegis: A <span>Cost-Aware</span><br />Real-Time Fraud<br />Intelligence System</h1>
         <p class="hero-sub">
-            An end-to-end fraud detection pipeline built on PySpark and Databricks —
+            An end-to-end fraud detection pipeline built on PySpark and Databricks,
             integrating streaming ingestion, supervised classification under severe class imbalance,
             cost-aware decisioning, and statistical drift monitoring.
         </p>
@@ -581,14 +581,14 @@
         <div class="wrap" id="problem">
             <h2>Why This Problem Is Hard</h2>
             <p class="section-desc">
-                Fraud detection in production is a systems engineering challenge — not just a classification challenge.
+                Fraud detection in production is a systems engineering challenge, not just a classification challenge.
                 Most academic work stops at offline metrics. Aegis was built to close that gap.
             </p>
             <div class="problem-grid">
                 <div class="problem-card">
                     <h3>Streaming, Not Batch</h3>
                     <p>Transactions arrive continuously. The pipeline must ingest, enrich, and score each one in real
-                        time using Spark Structured Streaming — not nightly batch jobs.</p>
+                        time using Spark Structured Streaming, not nightly batch jobs.</p>
                 </div>
                 <div class="problem-card">
                     <h3>Asymmetric Error Costs</h3>
@@ -598,7 +598,7 @@
                 <div class="problem-card">
                     <h3>Severe Class Imbalance</h3>
                     <p>Only 0.138% of transactions are fraudulent. A naive model predicting "no fraud" everywhere would
-                        score 99.86% accuracy — and catch zero frauds. Class-weighted training is essential.</p>
+                        score 99.86% accuracy and catch zero frauds. Class-weighted training is essential.</p>
                 </div>
                 <div class="problem-card">
                     <h3>Distribution Drift</h3>
@@ -616,7 +616,7 @@
         <div class="wrap">
             <h2>Results at a Glance</h2>
             <p class="section-desc">
-                Evaluated on PaySim — 49,962 transactions, 0.138% fraud rate — with all compute on free-tier Databricks
+                Evaluated on PaySim: 49,962 transactions, 0.138% fraud rate, all compute on free-tier Databricks
                 Community Edition.
             </p>
             <div class="metrics-grid">
@@ -626,11 +626,11 @@
                 </div>
                 <div class="metric-card">
                     <div class="metric-value">0.993</div>
-                    <div class="metric-label">AUC — Area under the ROC curve</div>
+                    <div class="metric-label">AUC: Area under the ROC curve</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-value">97.1%</div>
-                    <div class="metric-label">Fraud catch rate — 67 of 69 fraud cases caught</div>
+                    <div class="metric-label">Fraud catch rate: 67 of 69 fraud cases caught</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-value">0.23%</div>
@@ -672,8 +672,8 @@
                     <div class="phase-body">
                         <div class="phase-tag">Data Engineering</div>
                         <h3>Data Cleaning &amp; Validation</h3>
-                        <p>Cleaned the raw PaySim dataset (50,500 → 49,962 rows). Removed simulator artifacts —
-                            column-shift label corruption and malformed amount values — using Spark's
+                        <p>Cleaned the raw PaySim dataset (50,500 → 49,962 rows). Removed simulator artifacts:
+                            column-shift label corruption and malformed amount values, using Spark's
                             <code>try_cast</code> operator. Verified all 11 columns null-free before persisting to Delta
                             Lake.
                         </p>
@@ -732,7 +732,7 @@
                         <h3>19-Point Threshold Cost Sweep</h3>
                         <p>Swept thresholds from t = 0.05 to t = 0.95 in the cost space. Cost-theoretic minimum at t =
                             0.20 ($40,140 total cost, 2,676 false alarms). The operational t = 0.70 choice pays a $19.5M
-                            modeled premium to reduce the false-alarm queue 23× — justified by customer trust, queue
+                            modeled premium to reduce the false-alarm queue 23x, justified by customer trust, queue
                             capacity constraints, and regulatory exposure.</p>
                     </div>
                 </div>
