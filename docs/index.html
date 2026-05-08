@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aegis — Cost-Aware Real-Time Fraud Intelligence System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --red: #990000;
+            --red-light: #fff0f0;
+            --dark: #0a0a0a;
+            --gray: #555;
+            --light-gray: #f7f7f7;
+            --border: #e8e8e8;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 58px;
+        }
+
+        .nav-brand {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--red);
+            letter-spacing: -0.03em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--red);
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                padding: 0 1.2rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+            }
+
+            .nav-links a {
+                font-size: 0.78rem;
+            }
+        }
+
+        /* ── WRAPPER ── */
+        .wrap {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ── HERO ── */
+        #hero {
+            padding: 110px 2rem 100px;
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--red-light);
+            color: var(--red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 1.6rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--red);
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 5vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            color: var(--dark);
+        }
+
+        h1 span {
+            color: var(--red);
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--gray);
+            margin: 1.2rem 0 0.5rem;
+            font-weight: 400;
+            max-width: 660px;
+        }
+
+        .hero-byline {
+            font-size: 0.875rem;
+            color: #999;
+            margin-bottom: 2.2rem;
+        }
+
+        .hero-byline strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 24px;
+            border-radius: 7px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-primary {
+            background: var(--red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #7a0000;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--dark);
+            border: 1.5px solid #ccc;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--dark);
+            transform: translateY(-1px);
+        }
+
+        /* ── DIVIDER ── */
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── SECTIONS ── */
+        .section {
+            padding: 80px 0;
+        }
+
+        .wrap h2 {
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-desc {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 2.2rem;
+            max-width: 620px;
+        }
+
+        /* ── PROBLEM ── */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 620px) {
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .problem-card {
+            background: var(--light-gray);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-top: 3px solid var(--red);
+        }
+
+        .problem-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .problem-card p {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        /* ── METRICS ── */
+        #metrics {
+            background: var(--light-gray);
+        }
+
+        #metrics .wrap {
+            padding-top: 80px;
+            padding-bottom: 80px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 760px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 420px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.4rem 1.2rem;
+            border-bottom: 3px solid var(--red);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .metric-value {
+            font-size: 1.95rem;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .metric-label {
+            font-size: 0.78rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
+        /* ── PIPELINE ── */
+        .pipeline {
+            margin-top: 2.2rem;
+        }
+
+        .phase {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.4rem;
+            padding: 1.4rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .phase:last-child {
+            border-bottom: none;
+        }
+
+        .phase-num {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--red);
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .phase-body h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+
+        .phase-body p {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        .phase-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--red);
+            background: var(--red-light);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 0.4rem;
+        }
+
+        /* ── FIGURES ── */
+        .figures-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 620px) {
+            .figures-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .figure-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .figure-card a {
+            display: block;
+        }
+
+        .figure-card img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .figure-card img:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .fig-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        .fig-caption {
+            font-size: 0.83rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ── STACK ── */
+        #stack {
+            background: var(--light-gray);
+        }
+
+        #stack .wrap {
+            padding-top: 80px;
+            padding-bottom: 80px;
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 620px) {
+            .stack-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .stack-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            border: 1px solid var(--border);
+        }
+
+        .stack-card-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .stack-card-desc {
+            font-size: 0.78rem;
+            color: var(--gray);
+        }
+
+        /* ── ABOUT ── */
+        .about-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 620px) {
+            .about-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .about-block {
+            background: var(--light-gray);
+            border-radius: 10px;
+            padding: 1.8rem;
+        }
+
+        .about-block h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .about-block p {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 0.6rem;
+        }
+
+        .about-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-block a {
+            color: var(--red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .about-block a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.2rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        footer a {
+            color: var(--red);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        footer .footer-inner {
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.82em;
+            background: #f0f0f0;
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <span class="nav-brand">Aegis</span>
+        <ul class="nav-links">
+            <li><a href="#problem">Problem</a></li>
+            <li><a href="#metrics">Results</a></li>
+            <li><a href="#pipeline">Pipeline</a></li>
+            <li><a href="#figures">Figures</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-eyebrow">Machine Learning · Distributed Systems · FinTech</div>
+        <h1>Aegis: A <span>Cost-Aware</span><br />Real-Time Fraud<br />Intelligence System</h1>
+        <p class="hero-sub">
+            An end-to-end fraud detection pipeline built on PySpark and Databricks —
+            integrating streaming ingestion, supervised classification under severe class imbalance,
+            cost-aware decisioning, and statistical drift monitoring.
+        </p>
+        <p class="hero-byline">
+            <strong>Kashish Lalwani</strong> &nbsp;·&nbsp; Stony Brook University &nbsp;·&nbsp;
+            Built entirely on free-tier Databricks Community Edition
+        </p>
+        <div class="btn-row">
+            <a class="btn btn-primary" href="https://github.com/kashishlalwani13/aegis-fraud-detection"
+                target="_blank">View on GitHub</a>
+            <a class="btn btn-outline" href="report/AMS_561_Project_Report_116643432.pdf" target="_blank">Read the
+                Report →</a>
+        </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- PROBLEM -->
+    <div class="section">
+        <div class="wrap" id="problem">
+            <h2>Why This Problem Is Hard</h2>
+            <p class="section-desc">
+                Fraud detection in production is a systems engineering challenge — not just a classification challenge.
+                Most academic work stops at offline metrics. Aegis was built to close that gap.
+            </p>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>Streaming, Not Batch</h3>
+                    <p>Transactions arrive continuously. The pipeline must ingest, enrich, and score each one in real
+                        time using Spark Structured Streaming — not nightly batch jobs.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Asymmetric Error Costs</h3>
+                    <p>A missed fraud costs ~$1,500,000. A false alarm costs $15. The default 0.5 threshold treats both
+                        errors as equal. It isn't. The system replaces it with a cost-justified three-tier policy.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Severe Class Imbalance</h3>
+                    <p>Only 0.138% of transactions are fraudulent. A naive model predicting "no fraud" everywhere would
+                        score 99.86% accuracy — and catch zero frauds. Class-weighted training is essential.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Distribution Drift</h3>
+                    <p>Fraudster behavior shifts over time. A model trained today may degrade silently. Aegis includes a
+                        dual-signal PSI + KS drift layer validated through a controlled 3× injection experiment.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- METRICS -->
+    <div id="metrics">
+        <div class="wrap">
+            <h2>Results at a Glance</h2>
+            <p class="section-desc">
+                Evaluated on PaySim — 49,962 transactions, 0.138% fraud rate — with all compute on free-tier Databricks
+                Community Edition.
+            </p>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">0.9942</div>
+                    <div class="metric-label">F1 Score on held-out test set (100-tree Random Forest)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">0.993</div>
+                    <div class="metric-label">AUC — Area under the ROC curve</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">97.1%</div>
+                    <div class="metric-label">Fraud catch rate — 67 of 69 fraud cases caught</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">0.23%</div>
+                    <div class="metric-label">False-positive rate on legitimate transactions</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">0.640</div>
+                    <div class="metric-label">PSI after 3× drift injection (baseline: 0.003)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">23×</div>
+                    <div class="metric-label">Reduction in false-alarm queue vs. cost-theoretic minimum</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">$19.5M</div>
+                    <div class="metric-label">Cost gap quantified by 19-point threshold sweep</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">−0.0059</div>
+                    <div class="metric-label">Largest F1 drop in feature ablation (balance_diff removed)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- PIPELINE -->
+    <div class="section">
+        <div class="wrap" id="pipeline">
+            <h2>Six-Phase Pipeline</h2>
+            <p class="section-desc">
+                Each phase consumes the verified output of the previous phase as a Delta Lake table, mirroring
+                production pipeline design patterns.
+            </p>
+            <div class="pipeline">
+                <div class="phase">
+                    <div class="phase-num">1</div>
+                    <div class="phase-body">
+                        <div class="phase-tag">Data Engineering</div>
+                        <h3>Data Cleaning &amp; Validation</h3>
+                        <p>Cleaned the raw PaySim dataset (50,500 → 49,962 rows). Removed simulator artifacts —
+                            column-shift label corruption and malformed amount values — using Spark's
+                            <code>try_cast</code> operator. Verified all 11 columns null-free before persisting to Delta
+                            Lake.</p>
+                    </div>
+                </div>
+                <div class="phase">
+                    <div class="phase-num">2</div>
+                    <div class="phase-body">
+                        <div class="phase-tag">Streaming</div>
+                        <h3>Spark Structured Streaming + Feature Engineering</h3>
+                        <p>Wrapped the cleaned Delta table in a Spark Structured Streaming pipeline with
+                            <code>maxFilesPerTrigger=1</code> to simulate live transaction arrival. Engineered two
+                            domain features inline: <code>is_high_risk_type</code> (TRANSFER/CASH_OUT binary flag) and
+                            <code>balance_diff</code> (sender account drainage signal). Completed in 17.5 seconds across
+                            49,963 rows.</p>
+                    </div>
+                </div>
+                <div class="phase">
+                    <div class="phase-num">3</div>
+                    <div class="phase-body">
+                        <div class="phase-tag">Machine Learning</div>
+                        <h3>Class-Weighted Random Forest Classifier</h3>
+                        <p>Trained a 100-tree Random Forest on 7 features. Class weights of 356.45 (fraud) and 0.50
+                            (non-fraud) computed analytically to address the 0.138% imbalance. 80/20 train-test split
+                            (39,922 / 10,040 rows). Achieved F1 = 0.9942, AUC = 0.993 on the held-out set. Feature
+                            ablation confirms <code>balance_diff</code> as the most informative single feature.</p>
+                    </div>
+                </div>
+                <div class="phase">
+                    <div class="phase-num">4</div>
+                    <div class="phase-body">
+                        <div class="phase-tag">Decision Layer</div>
+                        <h3>Cost-Aware APPROVE / FLAG / BLOCK Policy</h3>
+                        <p>Replaced the default 0.5 cutoff with a three-tier policy anchored in a cost matrix:
+                            $1,500,000 per missed fraud vs. $15 per false alarm (a 100,000× asymmetry). Thresholds:
+                            APPROVE below 0.30, BLOCK above 0.70, FLAG in between for manual review. Catches 97.1% of
+                            fraud at only 0.23% false-positive rate on legitimate volume.</p>
+                    </div>
+                </div>
+                <div class="phase">
+                    <div class="phase-num">5</div>
+                    <div class="phase-body">
+                        <div class="phase-tag">Monitoring</div>
+                        <h3>PSI + KS Drift Monitoring</h3>
+                        <p>Applied Population Stability Index and Kolmogorov–Smirnov tests to all 7 model features on a
+                            temporal reference/current split. Validated via 3× amount injection: PSI rose from 0.003 to
+                            0.640 (~190× increase), KS statistic from 0.014 to 0.304 (~22× increase), p-value collapsed
+                            to numerical zero. Detector fires on real drift and stays silent on stable data.</p>
+                    </div>
+                </div>
+                <div class="phase">
+                    <div class="phase-num">6</div>
+                    <div class="phase-body">
+                        <div class="phase-tag">Optimization</div>
+                        <h3>19-Point Threshold Cost Sweep</h3>
+                        <p>Swept thresholds from t = 0.05 to t = 0.95 in the cost space. Cost-theoretic minimum at t =
+                            0.20 ($40,140 total cost, 2,676 false alarms). The operational t = 0.70 choice pays a $19.5M
+                            modeled premium to reduce the false-alarm queue 23× — justified by customer trust, queue
+                            capacity constraints, and regulatory exposure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- FIGURES -->
+    <div class="section">
+        <div class="wrap" id="figures">
+            <h2>Results &amp; Figures</h2>
+            <p class="section-desc">All figures generated from original Databricks notebooks. Click any image to view
+                full size.</p>
+            <div class="figures-grid">
+                <div class="figure-card">
+                    <a href="figures/cleaning_verification.png" target="_blank">
+                        <img src="figures/cleaning_verification.png" alt="Cleaned dataset schema and null check" />
+                    </a>
+                    <div class="fig-label">Phase 1 — Data Cleaning</div>
+                    <p class="fig-caption">Final cleaned schema and null verification after removing 538 corrupted rows.
+                        All 11 columns confirmed null-free, 49,962 rows retained.</p>
+                </div>
+                <div class="figure-card">
+                    <a href="figures/streaming_output.png" target="_blank">
+                        <img src="figures/streaming_output.png" alt="Streaming pipeline output sample" />
+                    </a>
+                    <div class="fig-label">Phase 2 — Streaming Pipeline</div>
+                    <p class="fig-caption">Sample output from the Spark Structured Streaming job with the two engineered
+                        feature columns: <code>is_high_risk_type</code> and <code>balance_diff</code>.</p>
+                </div>
+                <div class="figure-card">
+                    <a href="figures/model_metrics.png" target="_blank">
+                        <img src="figures/model_metrics.png" alt="Model Precision/Recall/F1/AUC" />
+                    </a>
+                    <div class="fig-label">Phase 3 — Model Performance</div>
+                    <p class="fig-caption">Precision, Recall, F1 = 0.9942, and AUC = 0.993 on the 10,040-row held-out
+                        test set containing 13 fraud cases.</p>
+                </div>
+                <div class="figure-card">
+                    <a href="figures/decision_heatmap.png" target="_blank">
+                        <img src="figures/decision_heatmap.png" alt="Cost-aware decision heatmap" />
+                    </a>
+                    <div class="fig-label">Phase 4 — Decision Heatmap</div>
+                    <p class="fig-caption">Cross-tabulation of APPROVE / FLAG / BLOCK decisions against ground-truth
+                        labels. 67 of 69 frauds caught; only 116 legitimate transactions incorrectly blocked (0.23%).
+                    </p>
+                </div>
+                <div class="figure-card">
+                    <a href="figures/drift_validation.png" target="_blank">
+                        <img src="figures/drift_validation.png" alt="Drift detector validation chart" />
+                    </a>
+                    <div class="fig-label">Phase 5 — Drift Validation</div>
+                    <p class="fig-caption">PSI and KS statistics before and after 3× amount injection. PSI rises from
+                        0.003 to 0.640, confirming the detector is both specific (silent on stable data) and sensitive
+                        (fires on real drift).</p>
+                </div>
+                <div class="figure-card">
+                    <a href="figures/cost_curve.png" target="_blank">
+                        <img src="figures/cost_curve.png" alt="19-point threshold sweep cost curve" />
+                    </a>
+                    <div class="fig-label">Phase 6 — Cost Curve</div>
+                    <p class="fig-caption">19-point threshold sweep from t = 0.05 to t = 0.95. The operational t = 0.70
+                        pays a $19.5M premium over the cost-theoretic optimum to achieve a 23× reduction in false
+                        alarms.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- STACK -->
+    <div id="stack">
+        <div class="wrap" style="padding-top:80px; padding-bottom:80px;">
+            <h2>Technical Stack</h2>
+            <p class="section-desc">Built entirely on free, open-source tools. No paid infrastructure. No proprietary
+                data.</p>
+            <div class="stack-grid">
+                <div class="stack-card">
+                    <div class="stack-card-title">Apache Spark / PySpark</div>
+                    <div class="stack-card-desc">Distributed data processing and ML training</div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-title">Spark Structured Streaming</div>
+                    <div class="stack-card-desc">Real-time micro-batch transaction ingestion</div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-title">Delta Lake</div>
+                    <div class="stack-card-desc">ACID-compliant pipeline state persistence</div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-title">Spark MLlib</div>
+                    <div class="stack-card-desc">Distributed Random Forest with class weighting</div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-title">Databricks Community Edition</div>
+                    <div class="stack-card-desc">Free-tier managed Spark environment</div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-title">SciPy</div>
+                    <div class="stack-card-desc">Kolmogorov–Smirnov two-sample drift test</div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-title">PSI (Population Stability Index)</div>
+                    <div class="stack-card-desc">Banking-standard distributional drift metric</div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-title">Matplotlib</div>
+                    <div class="stack-card-desc">Cost curves, heatmaps, drift charts</div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-title">PaySim Dataset</div>
+                    <div class="stack-card-desc">Synthetic mobile money transactions (open data)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- ABOUT -->
+    <div class="section">
+        <div class="wrap" id="about">
+            <h2>About</h2>
+            <p class="section-desc">Built to demonstrate production-grade ML engineering on industry-standard tools.</p>
+            <div class="about-inner">
+                <div class="about-block">
+                    <h3>Author</h3>
+                    <p><strong>Kashish Lalwani</strong><br />MS Student, Stony Brook University</p>
+                    <p>
+                        <!-- Replace # with your LinkedIn URL when ready -->
+                        <a href="#" target="_blank">LinkedIn →</a>
+                        &nbsp;&nbsp;
+                        <a href="https://github.com/kashishlalwani13" target="_blank">GitHub →</a>
+                    </p>
+                </div>
+                <div class="about-block">
+                    <h3>Project</h3>
+                    <p>Supervised by <strong>Professor Xiangmin (Jim) Jiao, Ph.D.</strong>, Stony Brook University.</p>
+                    <p>
+                        <a href="report/AMS_561_Project_Report_116643432.pdf" target="_blank">Full Technical Report
+                            (PDF) →</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/kashishlalwani13/aegis-fraud-detection" target="_blank">Source Code
+                            on GitHub →</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <p>
+                Aegis: A Cost-Aware Real-Time Fraud Intelligence System &nbsp;·&nbsp;
+                Kashish Lalwani, Stony Brook University
+                &nbsp;·&nbsp;
+                <a href="https://github.com/kashishlalwani13/aegis-fraud-detection" target="_blank">GitHub</a>
+                &nbsp;·&nbsp;
+                <a href="report/AMS_561_Project_Report_116643432.pdf" target="_blank">Report</a>
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
